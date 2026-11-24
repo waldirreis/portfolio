@@ -54,8 +54,8 @@ export const perfil = {
     stack: ["Power BI", "DAX", "SQL", "Snowflake", "Modelagem dimensional"],
   },
   caseERP: {
-    titulo: "Balcão de Controlados",
-    subtitulo: "Sistema web para dispensação de medicamentos controlados em farmácia",
+    titulo: "SmartFarma WR",
+    subtitulo: "Sistema web de gestão farmacêutica para a venda de medicamentos controlados, que nasceu de um problema real de balcão.",
     problema:
       "Na farmácia, a venda de medicamentos controlados exigia consultar lotes no relatório de estoque em PDF, registrar o cliente à mão e montar etiquetas, um processo lento e sujeito a erro num ambiente regulado.",
     solucao:
@@ -70,9 +70,9 @@ export const perfil = {
     ],
     stack: ["Python", "FastAPI", "SQLAlchemy", "PostgreSQL / SQLite", "ReportLab", "pdfplumber", "HTML/CSS/JS"],
     imagens: [
-      { src: "/img/erp-1.png", alt: "Tela do Balcão de Controlados com dados fictícios" },
-      { src: "/img/erp-2.png", alt: "Tela do Balcão de Controlados com dados fictícios" },
-      { src: "/img/erp-3.png", alt: "Tela do Balcão de Controlados com dados fictícios" },
+      { src: "/img/erp-3.png", alt: "Tela de atendimento: cliente, medicamento e lote, e conferência das etiquetas, com atalhos de teclado" },
+      { src: "/img/erp-2.png", alt: "Relatórios gerenciais: vendas por mês e desempenho por vendedor (dados fictícios)" },
+      { src: "/img/erp-1.png", alt: "Pós-venda: aniversariantes do mês com dados fictícios" },
     ],
   },
   trajetoria: [
