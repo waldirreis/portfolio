@@ -74,7 +74,7 @@ export function generateCorte(seed: number, ano: number, ateData: string): Corte
               executado: Math.min(executado, atribuido),
               improdutivo: Math.round(Math.min(executado, atribuido) * u(0.01, 0.07)),
               pago: Math.round(Math.min(executado, atribuido) * u(0.45, 0.85)),
-              meta: Math.round(esperado * 0.59 * 0.8),
+              meta: Math.round(esperado * 0.445),
               potencial: Math.round(esperado * 0.78),
             });
           });
