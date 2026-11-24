@@ -43,7 +43,14 @@ export function generateCorte(seed: number, ano: number, ateData: string): Corte
     return w.map((x) => x / s);
   });
   // eficiência estrutural por regional (algumas cronicamente abaixo da meta)
-  const efReg = DISTRIBUIDORAS.map((d) => d.regionais.map(() => u(0.86, 1.08)));
+  const efReg = DISTRIBUIDORAS.map((d) => d.regionais.map(() => u(0.8, 1.1)));
+  // perfil de cada distribuidora: atribuição, execução, pagamento e improdutivo
+  const perfil = DISTRIBUIDORAS.map(() => ({
+    atrib: u(0.42, 0.86),
+    exec: u(0.86, 1.08),
+    pago: u(0.38, 0.86),
+    improd: u(0.01, 0.11),
+  }));
 
   for (let d = new Date(Date.UTC(ano, 0, 1)); d <= end; d.setUTCDate(d.getUTCDate() + 1)) {
     const dow = d.getUTCDay();
@@ -52,16 +59,17 @@ export function generateCorte(seed: number, ano: number, ateData: string): Corte
     const mes = d.getUTCMonth();
     const sazonal = 1 + 0.12 * Math.sin(((mes - 2) / 12) * 2 * Math.PI);
 
+    const diaRuim = rnd() < 0.2 ? u(0.6, 0.85) : 1; // evento que afeta todas (chuva, falha de sistema)
     DISTRIBUIDORAS.forEach((dist, di) => {
-      const choque = rnd() < 0.12 ? u(0.35, 0.7) : u(0.9, 1.12); // dias ruins (chuva, greve, sistema)
+      const choque = diaRuim * (rnd() < 0.1 ? u(0.4, 0.75) : u(0.92, 1.1)); // dias ruins (chuva, greve, sistema)
       dist.regionais.forEach((regional, ri) => {
         MODALIDADES.forEach((modalidade, mi) => {
           PRIORIDADES.forEach((prioridade, pi) => {
             const esperado = dist.escala * sazonal * pesosReg[di][ri] * PESO_MODALIDADE[mi] * PESO_PRIORIDADE[pi];
             const gerado = Math.round(esperado * u(0.85, 1.15));
-            const taxaAtrib = u(0.4, 0.78);
+            const taxaAtrib = Math.min(0.97, perfil[di].atrib * u(0.85, 1.12));
             const atribuido = Math.round(gerado * taxaAtrib);
-            const taxaExec = Math.min(0.99, u(0.72, 0.95) * efReg[di][ri] * (pi === 0 ? 1.04 : 1));
+            const taxaExec = Math.min(0.99, u(0.74, 0.92) * perfil[di].exec * efReg[di][ri] * [1.07, 1, 0.93][pi]);
             const executado = Math.round(atribuido * taxaExec * choque);
             rows.push({
               data,
@@ -72,9 +80,9 @@ export function generateCorte(seed: number, ano: number, ateData: string): Corte
               gerado,
               atribuido,
               executado: Math.min(executado, atribuido),
-              improdutivo: Math.round(Math.min(executado, atribuido) * u(0.01, 0.07)),
-              pago: Math.round(Math.min(executado, atribuido) * u(0.45, 0.85)),
-              meta: Math.round(esperado * 0.445),
+              improdutivo: Math.round(Math.min(executado, atribuido) * perfil[di].improd * u(0.6, 1.4)),
+              pago: Math.round(Math.min(executado, atribuido) * Math.min(0.98, perfil[di].pago * u(0.85, 1.15))),
+              meta: Math.round(esperado * 0.43),
               potencial: Math.round(esperado * 0.78),
             });
           });

@@ -8,15 +8,13 @@ describe("generateCorte", () => {
     expect(generateCorte(2026, 2026, "2026-11-12")).toEqual(rows);
   });
   it("invariants", () => {
-    for (const r of rows) {
-      for (const k of ["gerado", "atribuido", "executado", "improdutivo", "pago", "meta", "potencial"] as const) {
-        expect(Number.isInteger(r[k]) && r[k] >= 0).toBe(true);
-      }
-      expect(r.atribuido).toBeLessThanOrEqual(r.gerado);
-      expect(r.executado).toBeLessThanOrEqual(r.atribuido);
-      expect(r.pago).toBeLessThanOrEqual(r.executado);
-      expect(r.improdutivo).toBeLessThanOrEqual(r.executado);
-    }
+    const keys = ["gerado", "atribuido", "executado", "improdutivo", "pago", "meta", "potencial"] as const;
+    const bad = rows.filter(
+      (r) =>
+        keys.some((k) => !Number.isInteger(r[k]) || r[k] < 0) ||
+        r.atribuido > r.gerado || r.executado > r.atribuido || r.pago > r.executado || r.improdutivo > r.executado,
+    );
+    expect(bad).toEqual([]);
   });
   it("no-real-names", () => {
     expect(JSON.stringify(rows)).not.toMatch(/equatorial|eqtl/i);
