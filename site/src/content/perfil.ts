@@ -5,12 +5,16 @@ export const perfil = {
   local: "São Luís – MA",
   subtitulo:
     "15+ anos transformando problemas de negócio em resultados medidos — agora em dados e software.",
-  resumo:
-    "Administrador com especialização em Ciência de Dados e carreira construída dentro da operação de cobrança de um dos maiores grupos de energia do país. Uso Power BI, SQL, Python e Snowflake para transformar a operação em indicadores, decisões e ROI, e estou cursando Análise e Desenvolvimento de Sistemas para levar isso ao desenvolvimento full-stack.",
+  resumo: [
+    "Administrador, especialista em Ciência de Dados, com mais de 15 anos de experiência em uma multinacional do setor de energia, atuando na liderança de projetos, gestão de equipes e transformação de processos por meio de dados e tecnologia.",
+    "Ao longo da minha trajetória, desenvolvi uma visão estratégica que conecta negócio, tecnologia e dados, transformando desafios operacionais em soluções, indicadores e resultados mensuráveis. Tenho experiência com Power BI, SQL, Python, Snowflake e BigQuery, aplicados à construção de soluções analíticas, consultas e processamento de dados, automação de processos e geração de valor para o negócio.",
+    "Nos últimos anos, ampliei minha atuação no universo da tecnologia, descobrindo uma nova paixão pelo desenvolvimento de soluções. Atualmente, curso Análise e Desenvolvimento de Sistemas e desenvolvo aplicações web próprias, aprofundando meus conhecimentos em programação, arquitetura de soluções e engenharia de dados.",
+    "Acredito na tecnologia como um instrumento de transformação dos negócios e busco integrar minha experiência em gestão e Analytics à construção de soluções tecnológicas cada vez mais eficientes e escaláveis.",
+  ],
   destaques: [
     { valor: "+8,6 p.p.", label: "de ROI no 1º ano do Smart Collection" },
     { valor: "7 meses", label: "de payback do projeto" },
-    { valor: "15+ anos", label: "de negócio, dados e cobrança" },
+    { valor: "15+ anos", label: "de negócio, dados e gestão de projetos" },
   ],
   contato: {
     email: "waldir.reis2@gmail.com",

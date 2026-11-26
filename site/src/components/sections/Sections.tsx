@@ -29,7 +29,7 @@ export function Nav() {
     ["#power-up", "Power UP"],
     ["#bi", "Dashboard"],
     ["#software", "Software"],
-    ["#trajetoria", "Trajetória"],
+    ["#trajetoria", "Sobre mim"],
   ];
   return (
     <header className="sticky top-0 z-30 border-b border-line/60 bg-bg/80 backdrop-blur">
@@ -54,7 +54,7 @@ export function Hero() {
           <h1 className="mt-4 font-display text-[2.6rem] font-bold leading-[1.02] tracking-tight sm:text-6xl lg:text-7xl">
             Eu transformo a operação em números que decidem.
           </h1>
-          <p className="mt-6 max-w-xl text-lg text-muted">{p.resumo}</p>
+          <p className="mt-6 max-w-xl text-lg text-muted">{p.resumo[0]}</p>
           <div className="mt-8 flex flex-wrap gap-3">
             <a href="#bi" className="rounded-xl bg-accent px-5 py-3 font-semibold text-bg hover:brightness-110">Ver o dashboard</a>
             <a href={p.contato.curriculo} className="rounded-xl border border-line px-5 py-3 font-semibold hover:border-accent">Baixar currículo</a>
@@ -176,7 +176,11 @@ export function CaseERP() {
 
 export function Trajetoria() {
   return (
-    <Section id="trajetoria" title="Trajetória" intro="De estagiário a gerente de projetos, sempre no ponto em que o negócio encontra os dados.">
+    <Section id="trajetoria" title="Sobre mim">
+      <div className="mb-16 max-w-3xl space-y-4 text-lg leading-relaxed text-muted">
+        {p.resumo.map((t) => <p key={t}>{t}</p>)}
+      </div>
+      <h3 className="mb-8 font-display text-2xl font-semibold">Trajetória</h3>
       <ol className="relative space-y-10 border-l border-line pl-6">
         {p.trajetoria.map((t) => (
           <li key={t.periodo} className="relative">
