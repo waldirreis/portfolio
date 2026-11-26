@@ -4,3 +4,4 @@ Dados/
 .superpowers/
 *.db
 .vercel
+.~lock.*
