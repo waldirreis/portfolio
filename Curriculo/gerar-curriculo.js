@@ -6,7 +6,7 @@ const [outDocx, outHtml] = process.argv.slice(2);
 const cv = {
   nome: "WALDIR FIGUEIREDO F. REIS",
   titulo: "ANALISTA DE BI | ANALYTICS | GESTÃO DE PROJETOS | COBRANÇA E RECUPERAÇÃO DE CRÉDITO",
-  contato: "(98) 98406-7989 | waldir.reis2@gmail.com | São Luís – MA | linkedin.com/in/waldirfigueiredo | github.com/waldirreis",
+  contato: "(98) 98406-7989 | waldir.reis2@gmail.com | São Luís – MA | linkedin.com/in/waldirfigueiredo | github.com/waldirreis | waldirreis.vercel.app",
   resumo:
     "Administrador de Empresas com especialização em Ciência de Dados e mais de 15 anos de experiência na Equatorial Energia, com atuação em estratégia comercial, cobrança, recuperação de crédito, arrecadação, contas a receber, negociação e gestão de performance. Gerente do projeto Smart Collection, apresentado no Google Cloud Power UP 2025. Atuação crescente em BI e Analytics, utilizando Power BI, Excel, SQL/PL-SQL, Python, ETL, SAP Comercial, CRM e tecnologias de dados como Snowflake e BigQuery. Atualmente cursando Análise e Desenvolvimento de Sistemas e desenvolvendo aplicações web em Python (FastAPI) e Next.js.",
   competencias:
