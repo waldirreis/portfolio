@@ -45,7 +45,7 @@ const cv = {
     },
   ],
   projetos: [
-    "SmartFarma WR — sistema web de gestão farmacêutica para venda de medicamentos controlados (Python, FastAPI, SQLAlchemy, PostgreSQL/SQLite): atendimento por teclado, importação de relatório SNGPC em PDF, baixa transacional de estoque, etiquetas em PDF, relatórios, auditoria, autenticação com hash PBKDF2, CSRF e CSP.",
+    "SmartFarma WR — sistema web de gestão farmacêutica para a venda de medicamentos controlados (Python, FastAPI, SQLAlchemy, PostgreSQL/SQLite). Reduziu em 90% o tempo de atendimento até a concretização da venda e eliminou o retrabalho do responsável técnico no processo automatizado. Atendimento em tela única, baixa transacional de estoque por lotes com lógica FEFO, etiquetas inteligentes, relatórios, módulo do responsável técnico, auditoria completa e segurança com sessões no servidor, CSRF, CSP e PIN com bloqueio progressivo.",
     "Portfólio com dashboard interativo — recriação em Next.js/TypeScript do painel diário de corte e recorte, com dados fictícios.",
   ],
   formacao: [
