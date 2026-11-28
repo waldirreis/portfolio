@@ -5,12 +5,12 @@ const [outDocx, outHtml] = process.argv.slice(2);
 
 const cv = {
   nome: "WALDIR FIGUEIREDO F. REIS",
-  titulo: "ANALISTA DE BI | ANALYTICS | GESTÃO DE PROJETOS | COBRANÇA E RECUPERAÇÃO DE CRÉDITO",
+  titulo: "BUSINESS INTELLIGENCE | ANALYTICS | ENGENHARIA DE DADOS | GESTÃO DE PROJETOS",
   contato: "(98) 98406-7989 | waldir.reis2@gmail.com | São Luís – MA | linkedin.com/in/waldirfigueiredo | github.com/waldirreis | waldirreis.vercel.app",
   resumo:
-    "Administrador de Empresas com especialização em Ciência de Dados e mais de 15 anos de experiência na Equatorial Energia, com atuação em estratégia comercial, cobrança, recuperação de crédito, arrecadação, contas a receber, negociação e gestão de performance. Gerente do projeto Smart Collection, apresentado no Google Cloud Power UP 2025. Atuação crescente em BI e Analytics, utilizando Power BI, Excel, SQL/PL-SQL, Python, ETL, SAP Comercial, CRM e tecnologias de dados como Snowflake e BigQuery. Atualmente cursando Análise e Desenvolvimento de Sistemas e desenvolvendo aplicações web em Python (FastAPI) e Next.js.",
+    "Administrador, especialista em Ciência de Dados, com mais de 15 anos de experiência na Equatorial Energia, a primeira multi-utilities nacional, atuando na liderança de projetos, gestão de equipes e transformação de processos por meio de dados e tecnologia. Visão estratégica que conecta negócio, tecnologia e dados, transformando desafios operacionais em soluções, indicadores e resultados mensuráveis, com experiência em Power BI, SQL, Python, Snowflake e BigQuery aplicados a soluções analíticas, processamento de dados e automação de processos. Gerente do projeto Smart Collection, apresentado no Google Cloud Power UP 2025. Atualmente cursando Análise e Desenvolvimento de Sistemas e desenvolvendo aplicações web próprias, aprofundando conhecimentos em programação, arquitetura de soluções e engenharia de dados.",
   competencias:
-    "Power BI • DAX • Excel • SQL / PL/SQL • Python • Snowflake • BigQuery • ETL • FastAPI • Next.js • SAP Comercial • CRM • Análise de Dados • Business Intelligence • Analytics • KPI e Indicadores • Regras de Negócio • Cobrança e Recuperação de Crédito • Estratégia Comercial • Negociação • Gestão de Projetos",
+    "Power BI • DAX • SQL / PL/SQL • Python • Snowflake • BigQuery • ETL • Modelagem de Dados • FastAPI • Next.js • Excel • Business Intelligence • Analytics • Engenharia de Dados • KPI e Indicadores • Regras de Negócio • Automação de Processos • Gestão de Projetos e Equipes • Estratégia Comercial • Cobrança e Recuperação de Crédito • SAP Comercial • CRM",
   experiencia: [
     {
       cab: "Equatorial Energia | Gerente de Projetos", periodo: "(10/2022 – Atual)",
