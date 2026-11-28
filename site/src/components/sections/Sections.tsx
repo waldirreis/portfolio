@@ -52,7 +52,8 @@ export function Hero() {
         <div>
           <p className="text-muted">{p.nome} · {p.local}</p>
           <h1 className="mt-4 font-display text-[2.6rem] font-bold leading-[1.02] tracking-tight sm:text-6xl lg:text-7xl">
-            Eu transformo a operação em números que decidem.
+            Negócio, dados e tecnologia.
+            <span className="block text-accent">Conectados para gerar resultados.</span>
           </h1>
           <p className="mt-6 max-w-xl text-lg text-muted">{p.resumo[0]}</p>
           <div className="mt-8 flex flex-wrap gap-3">
