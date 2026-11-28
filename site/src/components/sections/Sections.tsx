@@ -1,8 +1,14 @@
+"use client";
+
 import Image from "next/image";
 import { perfil } from "@/content/perfil";
+import { perfilEn } from "@/content/perfil.en";
+
+type Language = "pt" | "en";
+type LanguageProps = { lang: Language };
 import CorteDashboard from "@/components/dashboard/CorteDashboard";
 
-const p = perfil;
+const getProfile = (lang: Language) => lang === "en" ? perfilEn : perfil;
 
 function Section({ id, title, intro, children }: { id: string; title: string; intro?: string; children: React.ReactNode }) {
   return (
@@ -24,13 +30,9 @@ function Tags({ items }: { items: string[] }) {
   );
 }
 
-export function Nav() {
-  const links = [
-    ["#power-up", "Power UP"],
-    ["#bi", "Dashboard"],
-    ["#software", "Software"],
-    ["#trajetoria", "Sobre mim"],
-  ];
+export function Nav({ lang, onLanguageChange }: LanguageProps & { onLanguageChange: (lang: Language) => void }) {
+  const p = getProfile(lang);
+  const links = lang === "en" ? [["#power-up", "Power UP"], ["#bi", "Dashboard"], ["#software", "Software"], ["#trajetoria", "About"]] : [["#power-up", "Power UP"], ["#bi", "Dashboard"], ["#software", "Software"], ["#trajetoria", "Sobre mim"]];
   return (
     <header className="sticky top-0 z-30 border-b border-line/60 bg-bg/80 backdrop-blur">
       <nav className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
@@ -38,13 +40,14 @@ export function Nav() {
         <div className="hidden gap-6 text-sm text-muted md:flex">
           {links.map(([h, l]) => <a key={h} href={h} className="hover:text-ink">{l}</a>)}
         </div>
-        <a href="#contato" className="rounded-lg bg-accent px-3 py-1.5 text-sm font-semibold text-bg hover:brightness-110">Falar comigo</a>
+        <div className="flex items-center gap-2"><div className="flex rounded-lg border border-line p-1 text-xs" aria-label={lang === "en" ? "Choose language" : "Escolher idioma"}><button type="button" onClick={() => onLanguageChange("pt")} aria-pressed={lang === "pt"} className={lang === "pt" ? "rounded-md bg-surface-2 px-2 py-1 text-ink" : "rounded-md px-2 py-1 text-muted"}>PT</button><button type="button" onClick={() => onLanguageChange("en")} aria-pressed={lang === "en"} className={lang === "en" ? "rounded-md bg-surface-2 px-2 py-1 text-ink" : "rounded-md px-2 py-1 text-muted"}>EN</button></div><a href="#contato" className="rounded-lg bg-accent px-3 py-1.5 text-sm font-semibold text-white hover:brightness-110">{lang === "en" ? "Contact me" : "Falar comigo"}</a></div>
       </nav>
     </header>
   );
 }
 
-export function Hero() {
+export function Hero({ lang }: LanguageProps) {
+  const p = getProfile(lang);
   return (
     <section id="topo" className="relative overflow-hidden">
       <div className="grid-lines pointer-events-none absolute inset-0" aria-hidden />
@@ -52,12 +55,12 @@ export function Hero() {
         <div>
           <p className="text-muted">{p.nome} · {p.local}</p>
           <h1 className="mt-4 font-display text-[2.6rem] font-bold leading-[1.02] tracking-tight sm:text-6xl lg:text-7xl">
-            Eu transformo a operação em números que decidem.
+            {lang === "en" ? "I turn business challenges into data-driven decisions." : "Conecto negócio, dados e tecnologia para gerar resultados."}
           </h1>
-          <p className="mt-6 max-w-xl text-lg text-muted">{p.resumo[0]}</p>
+          <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted">{p.subtitulo}</p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <a href="#bi" className="rounded-xl bg-accent px-5 py-3 font-semibold text-bg hover:brightness-110">Ver o dashboard</a>
-            <a href={p.contato.curriculo} className="rounded-xl border border-line px-5 py-3 font-semibold hover:border-accent">Baixar currículo</a>
+            <a href="#bi" className="rounded-xl bg-accent px-5 py-3 font-semibold text-white shadow-lg shadow-blue-950/30 hover:-translate-y-0.5 hover:brightness-110">{lang === "en" ? "Explore projects" : "Conheça meus projetos"}</a>
+            <a href={p.contato.curriculo} className="rounded-xl border border-line px-5 py-3 font-semibold hover:border-accent">{lang === "en" ? "Download résumé" : "Baixar currículo"}</a>
           </div>
         </div>
         <div className="relative mx-auto w-full max-w-sm">
@@ -84,7 +87,8 @@ export function Hero() {
   );
 }
 
-export function PowerUp() {
+export function PowerUp({ lang }: LanguageProps) {
+  const p = getProfile(lang);
   const u = p.powerup;
   return (
     <Section id="power-up" title={u.titulo}>
@@ -103,7 +107,7 @@ export function PowerUp() {
             ))}
           </div>
           <div>
-            <p className="mb-2 text-sm text-muted">Ganho de ROI por ação de cobrança (p.p.)</p>
+            <p className="mb-2 text-sm text-muted">{lang === "en" ? "ROI improvement by collection action (percentage points)" : "Ganho de ROI por ação de cobrança (p.p.)"}</p>
             <ul className="space-y-1.5">
               {u.porAcao.map((a) => (
                 <li key={a.acao} className="grid grid-cols-[80px_1fr_56px] items-center gap-2 text-sm">
@@ -142,23 +146,25 @@ function ProblemaSolucao({ itens }: { itens: [string, string][] }) {
   );
 }
 
-export function CaseBI() {
+export function CaseBI({ lang }: LanguageProps) {
+  const p = getProfile(lang);
   const c = p.caseBI;
   return (
-    <Section id="bi" title="Painel diário de corte e recorte"
-      intro="A versão original roda em Power BI todos os dias na gestão de cobrança. Recriei aqui o mesmo painel com dados fictícios: use os filtros.">
-      <ProblemaSolucao itens={[["Problema", c.problema], ["Solução", c.solucao], ["Impacto", c.impacto]]} />
-      <div className="mt-10"><CorteDashboard /></div>
+    <Section id="bi" title={lang === "en" ? "Daily disconnection and reconnection dashboard" : "Painel diário de corte e recorte"}
+      intro={lang === "en" ? "The original version supports daily collections management in Power BI. This interactive recreation uses fictional data. Explore the filters." : "A versão original roda em Power BI todos os dias na gestão de cobrança. Recriei aqui o mesmo painel com dados fictícios: use os filtros."}>
+      <ProblemaSolucao itens={lang === "en" ? [["Challenge", c.problema], ["Solution", c.solucao], ["Impact", c.impacto]] : [["Problema", c.problema], ["Solução", c.solucao], ["Impacto", c.impacto]]} />
+      <div className="mt-10"><CorteDashboard lang={lang} /></div>
       <div className="mt-6"><Tags items={c.stack} /></div>
     </Section>
   );
 }
 
-export function CaseERP() {
+export function CaseERP({ lang }: LanguageProps) {
+  const p = getProfile(lang);
   const c = p.caseERP;
   return (
     <Section id="software" title={c.titulo} intro={c.subtitulo}>
-      <ProblemaSolucao itens={[["Problema", c.problema], ["Solução", c.solucao], ["O que tem por dentro", c.destaques.slice(0, 3).join(". ") + "."]]} />
+      <ProblemaSolucao itens={lang === "en" ? [["Challenge", c.problema], ["Solution", c.solucao], ["Under the hood", c.destaques.slice(0, 3).join(". ") + "."]] : [["Problema", c.problema], ["Solução", c.solucao], ["O que tem por dentro", c.destaques.slice(0, 3).join(". ") + "."]]} />
       <div className="mt-10 grid gap-4 md:grid-cols-3">
         {c.imagens.map((i) => (
           <figure key={i.src} className="overflow-hidden rounded-2xl border border-line bg-surface">
@@ -174,13 +180,14 @@ export function CaseERP() {
   );
 }
 
-export function Trajetoria() {
+export function Trajetoria({ lang }: LanguageProps) {
+  const p = getProfile(lang);
   return (
-    <Section id="trajetoria" title="Sobre mim">
+    <Section id="trajetoria" title={lang === "en" ? "About me" : "Sobre mim"}>
       <div className="mb-16 max-w-3xl space-y-4 text-lg leading-relaxed text-muted">
         {p.resumo.map((t) => <p key={t}>{t}</p>)}
       </div>
-      <h3 className="mb-8 font-display text-2xl font-semibold">Trajetória</h3>
+      <h3 className="mb-8 font-display text-2xl font-semibold">{lang === "en" ? "Career journey" : "Trajetória"}</h3>
       <ol className="relative space-y-10 border-l border-line pl-6">
         {p.trajetoria.map((t) => (
           <li key={t.periodo} className="relative">
@@ -196,7 +203,7 @@ export function Trajetoria() {
       </ol>
       <div className="mt-14 grid gap-10 md:grid-cols-2">
         <div>
-          <h3 className="font-display text-xl font-semibold">Formação</h3>
+          <h3 className="font-display text-xl font-semibold">{lang === "en" ? "Education" : "Formação"}</h3>
           <ul className="mt-4 space-y-3">
             {p.formacao.map((f) => (
               <li key={f.curso}>
@@ -208,7 +215,7 @@ export function Trajetoria() {
           <p className="mt-6 text-sm text-muted">{p.idiomas}</p>
         </div>
         <div>
-          <h3 className="font-display text-xl font-semibold">Competências</h3>
+          <h3 className="font-display text-xl font-semibold">{lang === "en" ? "Skills" : "Competências"}</h3>
           <div className="mt-4 space-y-5">
             {p.competencias.map((c) => (
               <div key={c.grupo}>
@@ -223,7 +230,8 @@ export function Trajetoria() {
   );
 }
 
-export function Contato() {
+export function Contato({ lang }: LanguageProps) {
+  const p = getProfile(lang);
   const c = p.contato;
   const itens = [
     ["E-mail", c.email, `mailto:${c.email}`],
@@ -234,8 +242,8 @@ export function Contato() {
   return (
     <section id="contato" className="border-t border-line bg-surface">
       <div className="mx-auto max-w-6xl px-4 py-16 sm:py-24">
-        <h2 className="font-display text-4xl font-bold tracking-tight sm:text-5xl">Vamos conversar?</h2>
-        <p className="mt-3 max-w-xl text-muted">Estou aberto a oportunidades como Analista de BI. Escolha o canal que preferir.</p>
+        <h2 className="font-display text-4xl font-bold tracking-tight sm:text-5xl">{lang === "en" ? "Let’s connect." : "Vamos conversar?"}</h2>
+        <p className="mt-3 max-w-xl text-muted">{lang === "en" ? "I welcome conversations about Business Intelligence, Analytics and technology opportunities. Choose your preferred channel." : "Estou aberto a conversas sobre oportunidades em Business Intelligence, Analytics e tecnologia. Escolha o canal que preferir."}</p>
         <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {itens.map(([l, v, h]) => (
             <a key={l} href={h} target={h.startsWith("http") ? "_blank" : undefined} rel="noreferrer"
@@ -245,8 +253,8 @@ export function Contato() {
             </a>
           ))}
         </div>
-        <a href={c.curriculo} className="mt-8 inline-block rounded-xl bg-accent px-5 py-3 font-semibold text-bg hover:brightness-110">Baixar currículo (PDF)</a>
-        <p className="mt-16 text-xs text-muted">© 2026 {p.nome}. Site feito por mim em Next.js; código no GitHub.</p>
+        <a href={c.curriculo} className="mt-8 inline-block rounded-xl bg-accent px-5 py-3 font-semibold text-white hover:brightness-110">{lang === "en" ? "Download résumé (PDF)" : "Baixar currículo (PDF)"}</a>
+        <p className="mt-16 text-xs text-muted">© 2026 {p.nome}. {lang === "en" ? "Built with Next.js. Source code on GitHub." : "Site desenvolvido em Next.js. Código no GitHub."}</p>
       </div>
     </section>
   );
