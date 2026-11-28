@@ -57,6 +57,7 @@ export function Hero() {
           <p className="mt-6 max-w-xl text-lg text-muted">{p.resumo[0]}</p>
           <div className="mt-8 flex flex-wrap gap-3">
             <a href="#bi" className="rounded-xl bg-accent px-5 py-3 font-semibold text-bg hover:brightness-110">Ver o dashboard</a>
+            <a href="#contato" className="rounded-xl border border-accent px-5 py-3 font-semibold text-accent hover:bg-accent hover:text-bg">Falar comigo</a>
             <a href={p.contato.curriculo} className="rounded-xl border border-line px-5 py-3 font-semibold hover:border-accent">Baixar currículo</a>
           </div>
         </div>
@@ -178,7 +179,7 @@ export function Trajetoria() {
   return (
     <Section id="trajetoria" title="Sobre mim">
       <div className="mb-16 max-w-3xl space-y-4 text-lg leading-relaxed text-muted">
-        {p.resumo.map((t) => <p key={t}>{t}</p>)}
+        {p.resumo.slice(1).map((t) => <p key={t}>{t}</p>)}
       </div>
       <h3 className="mb-8 font-display text-2xl font-semibold">Trajetória</h3>
       <ol className="relative space-y-10 border-l border-line pl-6">
@@ -235,7 +236,7 @@ export function Contato() {
     <section id="contato" className="border-t border-line bg-surface">
       <div className="mx-auto max-w-6xl px-4 py-16 sm:py-24">
         <h2 className="font-display text-4xl font-bold tracking-tight sm:text-5xl">Vamos conversar?</h2>
-        <p className="mt-3 max-w-xl text-muted">Estou aberto a oportunidades como Analista de BI. Escolha o canal que preferir.</p>
+        <p className="mt-3 max-w-xl text-muted">Estou aberto a oportunidades em BI, Analytics e Engenharia de Dados, onde posso unir visão de negócio, dados e tecnologia para gerar resultados. Escolha o canal que preferir.</p>
         <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {itens.map(([l, v, h]) => (
             <a key={l} href={h} target={h.startsWith("http") ? "_blank" : undefined} rel="noreferrer"

@@ -69,8 +69,8 @@ export default function CorteDashboard() {
         <div>
           <h3 className="font-display text-lg font-semibold">Painel Diário de Corte e Recorte</h3>
           <p className="text-xs text-muted">
-            Atualizado até {atualizado?.split("-").reverse().join("/")} ·{" "}
-            <span className="rounded-full border border-accent/40 px-2 py-0.5 text-accent">Dados fictícios gerados para demonstração.</span>
+            <span className="rounded-full border border-accent/40 px-2 py-0.5 text-accent">Dados fictícios para demonstração</span>{" "}
+            Período simulado: 01/01/2026 a {atualizado?.split("-").reverse().join("/")}
           </p>
         </div>
         <button onClick={() => setF({ mes: ultimoMes })} className="rounded-lg border border-line px-3 py-2 text-xs text-muted hover:border-accent hover:text-ink">
