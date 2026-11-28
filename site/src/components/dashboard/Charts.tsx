@@ -42,8 +42,8 @@ export function Empty() {
 }
 
 /** Barras executado (verde = bateu meta, vermelho = abaixo), linha da meta e linha do potencial. */
-export function ExecMetaChart({ data, xKey, xFmt }: { data: (SeriePonto & ({ dia: number } | { mes: number }))[]; xKey: "dia" | "mes"; xFmt?: (v: number) => string }) {
-  if (data.length === 0) return <div className="h-64"><Empty /></div>;
+export function ExecMetaChart({ data, xKey, xFmt, lang = "pt" }: { data: (SeriePonto & ({ dia: number } | { mes: number }))[]; xKey: "dia" | "mes"; xFmt?: (v: number) => string; lang?: "pt" | "en" }) {
+  if (data.length === 0) return <div className="h-64"><Empty lang={lang} /></div>;
   return (
     <div className="h-64">
       <ResponsiveContainer width="100%" height="100%">
@@ -51,14 +51,14 @@ export function ExecMetaChart({ data, xKey, xFmt }: { data: (SeriePonto & ({ dia
           <CartesianGrid vertical={false} stroke={C.grid} />
           <XAxis dataKey={xKey} {...axisProps} tickFormatter={xFmt} interval="preserveStartEnd" />
           <YAxis {...axisProps} tickFormatter={fmtK} width={48} />
-          <Tooltip {...tooltipStyle} labelFormatter={(v) => (xFmt ? xFmt(Number(v)) : `Dia ${v}`)}
+          <Tooltip {...tooltipStyle} labelFormatter={(v) => (xFmt ? xFmt(Number(v)) : `${lang === "en" ? "Day" : "Dia"} ${v}`)}
             formatter={(v, n) => [fmtInt(Number(v)), String(n)]} />
           <Legend wrapperStyle={{ fontSize: 12, color: C.axis }} />
-          <Bar isAnimationActive={false} dataKey="executado" name="Executado" fill={C.good} radius={[4, 4, 0, 0]}>
+          <Bar isAnimationActive={false} dataKey="executado" name={lang === "en" ? "Completed" : "Executado"} fill={C.good} radius={[4, 4, 0, 0]}>
             {data.map((d, i) => <Cell key={i} fill={d.bateuMeta ? C.good : C.bad} />)}
           </Bar>
-          <Line isAnimationActive={false} dataKey="meta" name="Meta" stroke={C.meta} strokeWidth={2} strokeDasharray="4 4" dot={false} />
-          <Line isAnimationActive={false} dataKey="potencial" name="Potencial" stroke={C.pot} strokeWidth={2} dot={false} type="monotone" />
+          <Line isAnimationActive={false} dataKey="meta" name={lang === "en" ? "Target" : "Meta"} stroke={C.meta} strokeWidth={2} strokeDasharray="4 4" dot={false} />
+          <Line isAnimationActive={false} dataKey="potencial" name={lang === "en" ? "Potential" : "Potencial"} stroke={C.pot} strokeWidth={2} dot={false} type="monotone" />
         </ComposedChart>
       </ResponsiveContainer>
     </div>
@@ -70,7 +70,7 @@ export const mesFmt = (m: number) => MESES[m - 1] ?? String(m);
 type RankKey = "pctExecAtrib" | "pctAtribGerado" | "pctPagoExec" | "pctImprodutivo";
 
 /** Ranking horizontal de percentuais com linha de meta. `menorMelhor` inverte a regra de cor. */
-export function RankingChart({ data, k, meta, menorMelhor }: { data: ({ nome: string } & Totais)[]; k: RankKey; meta?: number; menorMelhor?: boolean }) {
+export function RankingChart({ data, k, meta, menorMelhor, lang = "pt" }: { data: ({ nome: string } & Totais)[]; k: RankKey; meta?: number; menorMelhor?: boolean; lang?: "pt" | "en" }) {
   const rows = data
     .map((d) => ({ nome: d.nome.replace("Distribuidora ", ""), v: d[k] }))
     .filter((d): d is { nome: string; v: number } => d.v !== null)
@@ -83,7 +83,7 @@ export function RankingChart({ data, k, meta, menorMelhor }: { data: ({ nome: st
         <BarChart data={rows} layout="vertical" margin={{ top: 4, right: 48, left: 0, bottom: 4 }} barCategoryGap={6}>
           <XAxis type="number" hide domain={menorMelhor ? [0, (m: number) => Math.max(m * 1.3, (meta ?? 0) * 1.2)] : [0, 100]} />
           <YAxis type="category" dataKey="nome" {...axisProps} width={96} />
-          <Tooltip {...tooltipStyle} formatter={(v) => [fmtPct(Number(v)), "Resultado"]} />
+          <Tooltip {...tooltipStyle} formatter={(v) => [fmtPct(Number(v)), lang === "en" ? "Result" : "Resultado"]} />
           {meta !== undefined && (
             <ReferenceLine x={meta} stroke={C.meta} strokeDasharray="3 3" />
           )}
@@ -97,7 +97,7 @@ export function RankingChart({ data, k, meta, menorMelhor }: { data: ({ nome: st
   );
 }
 
-export function PrioridadeChart({ data }: { data: PrioridadeLinha[] }) {
+export function PrioridadeChart({ data, lang = "pt" }: { data: PrioridadeLinha[]; lang?: "pt" | "en" }) {
   const rows = data.map((d) => ({ ...d, nome: d.nome.replace("Distribuidora ", "") }));
   if (rows.length === 0) return <div className="h-64"><Empty /></div>;
   return (
@@ -125,7 +125,7 @@ function median(xs: number[]) {
   return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2;
 }
 
-export function DispersaoChart({ data }: { data: ({ nome: string } & Totais)[] }) {
+export function DispersaoChart({ data, lang = "pt" }: { data: ({ nome: string } & Totais)[]; lang?: "pt" | "en" }) {
   const pts = data
     .filter((d) => d.pctExecAtrib !== null && d.pctAtribGerado !== null)
     .map((d) => ({ nome: d.nome.replace("Distribuidora ", ""), x: d.pctExecAtrib as number, y: d.pctAtribGerado as number, z: d.executado }));
@@ -137,11 +137,11 @@ export function DispersaoChart({ data }: { data: ({ nome: string } & Totais)[] }
       <ResponsiveContainer width="100%" height="100%">
         <ScatterChart margin={{ top: 12, right: 16, left: -8, bottom: 8 }}>
           <CartesianGrid stroke={C.grid} />
-          <XAxis type="number" dataKey="x" name="% Prod. Atribuído" {...axisProps} domain={["dataMin - 5", 100]} tickFormatter={(v) => `${Math.round(v)}%`} />
-          <YAxis type="number" dataKey="y" name="% Atribuição" {...axisProps} domain={[0, 100]} tickFormatter={(v) => `${v}%`} />
+          <XAxis type="number" dataKey="x" name={lang === "en" ? "Assigned productivity %" : "% Prod. Atribuído"} {...axisProps} domain={["dataMin - 5", 100]} tickFormatter={(v) => `${Math.round(v)}%`} />
+          <YAxis type="number" dataKey="y" name={lang === "en" ? "Assignment rate %" : "% Atribuição"} {...axisProps} domain={[0, 100]} tickFormatter={(v) => `${v}%`} />
           <ZAxis type="number" dataKey="z" range={[60, 260]} />
-          <ReferenceLine x={mx} stroke={C.axis} strokeDasharray="4 4" label={{ value: `Mediana ${fmtPct(mx)}`, fill: C.axis, fontSize: 10, position: "insideTopLeft" }} />
-          <ReferenceLine y={my} stroke={C.axis} strokeDasharray="4 4" label={{ value: `Mediana ${fmtPct(my)}`, fill: C.axis, fontSize: 10, position: "insideBottomRight" }} />
+          <ReferenceLine x={mx} stroke={C.axis} strokeDasharray="4 4" label={{ value: `${lang === "en" ? "Median" : "Mediana"} ${fmtPct(mx)}`, fill: C.axis, fontSize: 10, position: "insideTopLeft" }} />
+          <ReferenceLine y={my} stroke={C.axis} strokeDasharray="4 4" label={{ value: `${lang === "en" ? "Median" : "Mediana"} ${fmtPct(my)}`, fill: C.axis, fontSize: 10, position: "insideBottomRight" }} />
           <Tooltip {...tooltipStyle}
             content={({ payload }) => {
               const p = payload?.[0]?.payload as (typeof pts)[number] | undefined;

@@ -102,28 +102,28 @@ export default function CorteDashboard({ lang = "pt" }: { lang?: "pt" | "en" }) 
 
       <div className="grid gap-3 lg:grid-cols-2">
         <Card title={`${lang === "en" ? "Completed × Target by day" : "Executado × Meta por dia"} — ${mesFmt(mesDia)}`} subtitle={lang === "en" ? "Green: target met · Red: below target" : "Verde: bateu a meta do dia · Vermelho: abaixo"}>
-          <ExecMetaChart data={dias} xKey="dia" />
+          <ExecMetaChart data={dias} xKey="dia" lang={lang} />
         </Card>
         <Card title={lang === "en" ? "Completed × Target by month" : "Executado × Meta por mês"} subtitle={lang === "en" ? "Monthly cumulative total" : "Acumulado mensal no ano"}>
-          <ExecMetaChart data={meses} xKey="mes" xFmt={mesFmt} />
+          <ExecMetaChart data={meses} xKey="mes" xFmt={mesFmt} lang={lang} />
         </Card>
         <Card title={lang === "en" ? "Completed × Assigned" : "Executado × Atribuído"} subtitle={`${lang === "en" ? "By" : "Por"} ${lang === "en" ? (grupo === "regional" ? "region" : "distributor") : grupo} · ${lang === "en" ? "target" : "meta"} 70%`}>
-          <RankingChart data={grupos} k="pctExecAtrib" meta={70} />
+          <RankingChart data={grupos} k="pctExecAtrib" meta={70} lang={lang} />
         </Card>
         <Card title={lang === "en" ? "Assigned × Generated" : "Atribuído × Gerado"} subtitle={`${lang === "en" ? "By" : "Por"} ${lang === "en" ? (grupo === "regional" ? "region" : "distributor") : grupo} · ${lang === "en" ? "target" : "meta"} 80%`}>
-          <RankingChart data={grupos} k="pctAtribGerado" meta={80} />
+          <RankingChart data={grupos} k="pctAtribGerado" meta={80} lang={lang} />
         </Card>
         <Card title={lang === "en" ? "Completed × Assigned by priority" : "Executado × Atribuído por prioridade"} subtitle={lang === "en" ? "Productivity by debt range" : "% de produtividade por faixa de débito"}>
-          <PrioridadeChart data={prios} />
+          <PrioridadeChart data={prios} lang={lang} />
         </Card>
         <Card title={lang === "en" ? "Performance scatter plot" : "Mapa de dispersão"} subtitle={`${lang === "en" ? "Assigned productivity × assignment rate by" : "% Prod. Atribuído × % Atribuição por"} ${lang === "en" ? (grupo === "regional" ? "region" : "distributor") : grupo} · ${lang === "en" ? "size = completed" : "tamanho = executado"}`}>
-          <DispersaoChart data={grupos} />
+          <DispersaoChart data={grupos} lang={lang} />
         </Card>
         <Card title={lang === "en" ? "Unproductive actions" : "Improdutivo"} subtitle={lang === "en" ? "Lower is better · 5% benchmark" : "Menor é melhor · referência 5%"}>
-          <RankingChart data={grupos} k="pctImprodutivo" meta={5} menorMelhor />
+          <RankingChart data={grupos} k="pctImprodutivo" meta={5} menorMelhor lang={lang} />
         </Card>
         <Card title={lang === "en" ? "Paid × Completed" : "Pago × Executado"} subtitle={lang === "en" ? "Action effectiveness: customers who paid after disconnection" : "Efetividade da ação: clientes que pagaram após o corte"}>
-          <RankingChart data={grupos} k="pctPagoExec" />
+          <RankingChart data={grupos} k="pctPagoExec" lang={lang} />
         </Card>
       </div>
     </div>
