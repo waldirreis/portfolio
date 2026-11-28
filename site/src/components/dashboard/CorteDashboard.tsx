@@ -42,7 +42,7 @@ function Kpi({ label, value, hint, tone }: { label: string; value: string; hint?
   );
 }
 
-export default function CorteDashboard() {
+export default function CorteDashboard({ lang = "pt" }: { lang?: "pt" | "en" }) {
   const all = useMemo(() => generateCorte(2026, 2026, ATE), []);
   const ultimoMes = Number(ATE.slice(5, 7));
   const [f, setF] = useState<Filtros>({ mes: ultimoMes });
@@ -67,62 +67,62 @@ export default function CorteDashboard() {
     <div className="rounded-3xl border border-line bg-bg/60 p-3 sm:p-5">
       <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h3 className="font-display text-lg font-semibold">Painel Diário de Corte e Recorte</h3>
+          <h3 className="font-display text-lg font-semibold">{lang === "en" ? "Daily Disconnection & Reconnection Dashboard" : "Painel Diário de Corte e Recorte"}</h3>
           <p className="text-xs text-muted">
-            Atualizado até {atualizado?.split("-").reverse().join("/")} ·{" "}
-            <span className="rounded-full border border-accent/40 px-2 py-0.5 text-accent">Dados fictícios gerados para demonstração.</span>
+            {lang === "en" ? "Updated through" : "Atualizado até"} {atualizado?.split("-").reverse().join("/")} ·{" "}
+            <span className="rounded-full border border-accent/40 px-2 py-0.5 text-accent">{lang === "en" ? "Fictional data for demonstration." : "Dados fictícios gerados para demonstração."}</span>
           </p>
         </div>
         <button onClick={() => setF({ mes: ultimoMes })} className="rounded-lg border border-line px-3 py-2 text-xs text-muted hover:border-accent hover:text-ink">
-          Limpar filtros
+          {lang === "en" ? "Reset filters" : "Limpar filtros"}
         </button>
       </div>
 
       <div className="mb-4 grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-5">
-        <Select label="Distribuidora" value={f.distribuidora} onChange={(v) => set("distribuidora", v)}
+        <Select label={lang === "en" ? "Distributor" : "Distribuidora"} value={f.distribuidora} onChange={(v) => set("distribuidora", v)}
           options={DISTRIBUIDORAS.map((d) => ({ v: d.nome, l: d.nome }))} />
-        <Select label="Regional" value={f.regional} onChange={(v) => set("regional", v)}
+        <Select label={lang === "en" ? "Region" : "Regional"} value={f.regional} onChange={(v) => set("regional", v)}
           options={regionais.map((r) => ({ v: r, l: r }))} />
-        <Select label="Mês" value={f.mes} onChange={(v) => set("mes", v)} all="Ano todo"
+        <Select label={lang === "en" ? "Month" : "Mês"} value={f.mes} onChange={(v) => set("mes", v)} all={lang === "en" ? "Full year" : "Ano todo"}
           options={MESES.map((m, i) => ({ v: i + 1, l: m }))} />
-        <Select<Modalidade> label="Modalidade" value={f.modalidade} onChange={(v) => set("modalidade", v)}
-          options={MODALIDADES.map((m) => ({ v: m, l: m === "CORTE" ? "Corte" : "Recorte" }))} />
-        <Select<Prioridade> label="Prioridade" value={f.prioridade} onChange={(v) => set("prioridade", v)}
+        <Select<Modalidade> label={lang === "en" ? "Action" : "Modalidade"} value={f.modalidade} onChange={(v) => set("modalidade", v)}
+          options={MODALIDADES.map((m) => ({ v: m, l: m === "CORTE" ? (lang === "en" ? "Disconnection" : "Corte") : (lang === "en" ? "Reconnection" : "Recorte") }))} />
+        <Select<Prioridade> label={lang === "en" ? "Priority" : "Prioridade"} value={f.prioridade} onChange={(v) => set("prioridade", v)}
           options={PRIORIDADES.map((p) => ({ v: p, l: p }))} />
       </div>
 
       <div className="mb-4 grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-6">
-        <Kpi label="Gerado" value={fmtInt(t.gerado)} />
-        <Kpi label="Atribuído" value={fmtInt(t.atribuido)} hint={`${fmtPct(t.pctAtribGerado)} do gerado`} />
-        <Kpi label="Executado" value={fmtInt(t.executado)} hint={`Meta ${fmtInt(t.meta)}`} tone={metaPct === null ? undefined : metaPct >= 100 ? "good" : "bad"} />
-        <Kpi label="Pago" value={fmtInt(t.pago)} />
-        <Kpi label="Exec × Atrib" value={fmtPct(t.pctExecAtrib)} hint="Meta 70%" tone={t.pctExecAtrib === null ? undefined : t.pctExecAtrib >= 70 ? "good" : "bad"} />
-        <Kpi label="Pago × Exec" value={fmtPct(t.pctPagoExec)} />
+        <Kpi label={lang === "en" ? "Generated" : "Gerado"} value={fmtInt(t.gerado)} />
+        <Kpi label={lang === "en" ? "Assigned" : "Atribuído"} value={fmtInt(t.atribuido)} hint={`${fmtPct(t.pctAtribGerado)} ${lang === "en" ? "of generated" : "do gerado"}`} />
+        <Kpi label={lang === "en" ? "Completed" : "Executado"} value={fmtInt(t.executado)} hint={`${lang === "en" ? "Target" : "Meta"} ${fmtInt(t.meta)}`} tone={metaPct === null ? undefined : metaPct >= 100 ? "good" : "bad"} />
+        <Kpi label={lang === "en" ? "Paid" : "Pago"} value={fmtInt(t.pago)} />
+        <Kpi label={lang === "en" ? "Completed × Assigned" : "Exec × Atrib"} value={fmtPct(t.pctExecAtrib)} hint={lang === "en" ? "Target 70%" : "Meta 70%"} tone={t.pctExecAtrib === null ? undefined : t.pctExecAtrib >= 70 ? "good" : "bad"} />
+        <Kpi label={lang === "en" ? "Paid × Completed" : "Pago × Exec"} value={fmtPct(t.pctPagoExec)} />
       </div>
 
       <div className="grid gap-3 lg:grid-cols-2">
-        <Card title={`Executado × Meta por dia — ${mesFmt(mesDia)}`} subtitle="Verde: bateu a meta do dia · Vermelho: abaixo">
+        <Card title={`${lang === "en" ? "Completed × Target by day" : "Executado × Meta por dia"} — ${mesFmt(mesDia)}`} subtitle={lang === "en" ? "Green: target met · Red: below target" : "Verde: bateu a meta do dia · Vermelho: abaixo"}>
           <ExecMetaChart data={dias} xKey="dia" />
         </Card>
-        <Card title="Executado × Meta por mês" subtitle="Acumulado mensal no ano">
+        <Card title={lang === "en" ? "Completed × Target by month" : "Executado × Meta por mês"} subtitle={lang === "en" ? "Monthly cumulative total" : "Acumulado mensal no ano"}>
           <ExecMetaChart data={meses} xKey="mes" xFmt={mesFmt} />
         </Card>
-        <Card title="Executado × Atribuído" subtitle={`Por ${grupo} · meta 70%`}>
+        <Card title={lang === "en" ? "Completed × Assigned" : "Executado × Atribuído"} subtitle={`${lang === "en" ? "By" : "Por"} ${lang === "en" ? (grupo === "regional" ? "region" : "distributor") : grupo} · ${lang === "en" ? "target" : "meta"} 70%`}>
           <RankingChart data={grupos} k="pctExecAtrib" meta={70} />
         </Card>
-        <Card title="Atribuído × Gerado" subtitle={`Por ${grupo} · meta 80%`}>
+        <Card title={lang === "en" ? "Assigned × Generated" : "Atribuído × Gerado"} subtitle={`${lang === "en" ? "By" : "Por"} ${lang === "en" ? (grupo === "regional" ? "region" : "distributor") : grupo} · ${lang === "en" ? "target" : "meta"} 80%`}>
           <RankingChart data={grupos} k="pctAtribGerado" meta={80} />
         </Card>
-        <Card title="Executado × Atribuído por prioridade" subtitle="% de produtividade por faixa de débito">
+        <Card title={lang === "en" ? "Completed × Assigned by priority" : "Executado × Atribuído por prioridade"} subtitle={lang === "en" ? "Productivity by debt range" : "% de produtividade por faixa de débito"}>
           <PrioridadeChart data={prios} />
         </Card>
-        <Card title="Mapa de dispersão" subtitle={`% Prod. Atribuído × % Atribuição por ${grupo} · tamanho = executado`}>
+        <Card title={lang === "en" ? "Performance scatter plot" : "Mapa de dispersão"} subtitle={`${lang === "en" ? "Assigned productivity × assignment rate by" : "% Prod. Atribuído × % Atribuição por"} ${lang === "en" ? (grupo === "regional" ? "region" : "distributor") : grupo} · ${lang === "en" ? "size = completed" : "tamanho = executado"}`}>
           <DispersaoChart data={grupos} />
         </Card>
-        <Card title="Improdutivo" subtitle="Menor é melhor · referência 5%">
+        <Card title={lang === "en" ? "Unproductive actions" : "Improdutivo"} subtitle={lang === "en" ? "Lower is better · 5% benchmark" : "Menor é melhor · referência 5%"}>
           <RankingChart data={grupos} k="pctImprodutivo" meta={5} menorMelhor />
         </Card>
-        <Card title="Pago × Executado" subtitle="Efetividade da ação: clientes que pagaram após o corte">
+        <Card title={lang === "en" ? "Paid × Completed" : "Pago × Executado"} subtitle={lang === "en" ? "Action effectiveness: customers who paid after disconnection" : "Efetividade da ação: clientes que pagaram após o corte"}>
           <RankingChart data={grupos} k="pctPagoExec" />
         </Card>
       </div>

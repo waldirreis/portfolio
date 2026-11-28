@@ -7,8 +7,8 @@ const bricolage = Bricolage_Grotesque({ variable: "--font-bricolage", subsets: [
 
 export const metadata: Metadata = {
   title: "Waldir Reis — Business Intelligence & Analytics",
-  description:
-    "15+ anos transformando problemas de negócio em resultados. Power BI, SQL, Python e Snowflake. Case Smart Collection apresentado no Google Cloud Power UP 2025.",
+  description: "Business Intelligence and Analytics professional with 15+ years of experience. Power BI, SQL, Python, Snowflake and BigQuery. Smart Collection case presented at Google Cloud Power UP 2025.",
+  alternates: { languages: { "pt-BR": "/", "en": "/" } },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
