@@ -1,10 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CaseBI, CaseERP, Contato, Hero, Nav, PowerUp, Trajetoria } from "@/components/sections/Sections";
 
 export default function Home() {
   const [lang, setLang] = useState<"pt" | "en">("pt");
+
+  useEffect(() => {
+    document.documentElement.lang = lang === "en" ? "en" : "pt-BR";
+  }, [lang]);
 
   return (
     <>

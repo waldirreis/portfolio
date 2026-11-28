@@ -253,7 +253,7 @@ export function Contato({ lang }: LanguageProps) {
             </a>
           ))}
         </div>
-        <a href={c.curriculo} className="mt-8 inline-block rounded-xl bg-accent px-5 py-3 font-semibold text-white hover:brightness-110">{lang === "en" ? "Download résumé (PDF)" : "Baixar currículo (PDF)"}</a>
+        <a href={c.curriculo} className="mt-8 inline-block rounded-xl bg-accent px-5 py-3 font-semibold text-white hover:brightness-110">{lang === "en" ? "Download résumé (Portuguese PDF)" : "Baixar currículo (PDF)"}</a>
         <p className="mt-16 text-xs text-muted">© 2026 {p.nome}. {lang === "en" ? "Built with Next.js. Source code on GitHub." : "Site desenvolvido em Next.js. Código no GitHub."}</p>
       </div>
     </section>
