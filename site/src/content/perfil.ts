@@ -59,19 +59,43 @@ export const perfil = {
   },
   caseERP: {
     titulo: "SmartFarma WR",
-    subtitulo: "Sistema web de gestão farmacêutica para a venda de medicamentos controlados, que nasceu de um problema real de balcão.",
-    problema:
-      "Na farmácia, a venda de medicamentos controlados exigia consultar lotes no relatório de estoque em PDF, registrar o cliente à mão e montar etiquetas, um processo lento e sujeito a erro num ambiente regulado.",
-    solucao:
-      "Comecei com um app desktop (Python, Tkinter e SQLite) e evoluí para uma aplicação web completa: atendimento em tela única operado pelo teclado, importação do relatório SNGPC em PDF, baixa de estoque transacional, etiquetas em PDF, relatórios, pós-venda e um módulo do responsável técnico.",
-    destaques: [
-      "Login com hash PBKDF2, sessões no servidor, CSRF e CSP com nonce",
-      "Permissões por módulo e PIN do vendedor com bloqueio progressivo",
-      "Auditoria completa com exportação CSV",
-      "Relatórios no banco: previsão de ruptura, perdas por vencimento e desempenho por vendedor",
-      "Consentimento LGPD no cadastro e pós-venda via WhatsApp",
-      "Testes automatizados",
+    subtitulo:
+      "Sistema web de gestão farmacêutica desenvolvido para digitalizar e otimizar a comercialização de medicamentos controlados. O projeto nasceu de uma necessidade real de balcão e evoluiu para uma solução integrada, conectando atendimento, estoque, rastreabilidade e responsabilidade técnica.",
+    numeros: [
+      { valor: "90%", label: "Redução no tempo de atendimento até a concretização da venda" },
+      { valor: "Zero", label: "Retrabalho do responsável técnico no processo automatizado" },
+      { valor: "FEFO", label: "Venda sugere primeiro o lote com vencimento mais próximo" },
     ],
+    problema:
+      "O processo de venda de medicamentos controlados era predominantemente manual. Os dados da venda precisavam ser preenchidos à mão, tornando o atendimento lento, aumentando a possibilidade de erros e gerando retrabalho para o responsável técnico, especialmente em um ambiente sujeito a exigências regulatórias.",
+    solucao:
+      "Desenvolvi uma aplicação web que centraliza o processo de venda em uma única interface, com operação otimizada para teclado e foco na agilidade do atendimento.",
+    solucaoItens: [
+      ["Atendimento em tela única", "fluxo simplificado para registrar vendas com rapidez."],
+      ["Gestão de estoque", "baixa transacional e controle por lotes e vencimentos."],
+      ["Impressão inteligente de etiquetas", "layouts adaptáveis à quantidade de medicamentos e lotes."],
+      ["Relatórios e pós-venda", "consultas e acompanhamento das operações realizadas."],
+      ["Módulo do responsável técnico", "centralização das atividades de conferência e controle."],
+    ],
+    complementares: [
+      "Consulta e identificação de medicamentos correlacionados pela composição.",
+      "Sugestão de venda priorizando lotes com vencimento mais próximo, seguindo a lógica FEFO (First Expire, First Out).",
+      "Geração otimizada de etiquetas conforme a quantidade de itens e lotes envolvidos na operação.",
+    ],
+    seguranca: [
+      "Autenticação com gerenciamento de sessões no servidor.",
+      "Proteção contra CSRF e Content Security Policy (CSP) com nonce.",
+      "Permissões de acesso configuráveis por módulo.",
+      "Autorização de operações por PIN do vendedor, com bloqueio progressivo após tentativas inválidas.",
+      "Trilha completa de auditoria, com exportação dos registros em CSV.",
+    ],
+    resultados: [
+      "90% de redução no tempo de atendimento até a concretização da venda.",
+      "Eliminação do retrabalho operacional do responsável técnico relacionado ao processo automatizado.",
+      "Redução de inconsistências e riscos de inconformidade regulatória, por meio da padronização e rastreabilidade das operações.",
+    ],
+    diferencial:
+      "Mais do que digitalizar uma rotina, o SmartFarma WR transformou um processo manual e fragmentado em um fluxo integrado, com foco em produtividade, segurança operacional e conformidade regulatória.",
     stack: ["Python", "FastAPI", "SQLAlchemy", "PostgreSQL / SQLite", "ReportLab", "pdfplumber", "HTML/CSS/JS"],
     imagens: [
       { src: "/img/erp-3.png", alt: "Tela de atendimento: cliente, medicamento e lote, e conferência das etiquetas, com atalhos de teclado" },

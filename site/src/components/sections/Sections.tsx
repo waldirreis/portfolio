@@ -156,21 +156,65 @@ export function CaseBI() {
   );
 }
 
+function Lista({ titulo, itens }: { titulo: string; itens: string[] }) {
+  return (
+    <div>
+      <h3 className="font-display text-lg font-semibold">{titulo}</h3>
+      <ul className="mt-3 space-y-2 text-muted leading-relaxed">
+        {itens.map((d) => <li key={d} className="flex gap-2"><span className="text-accent" aria-hidden>✓</span><span>{d}</span></li>)}
+      </ul>
+    </div>
+  );
+}
+
 export function CaseERP() {
   const c = p.caseERP;
   return (
     <Section id="software" title={c.titulo} intro={c.subtitulo}>
-      <ProblemaSolucao itens={[["Problema", c.problema], ["Solução", c.solucao], ["O que tem por dentro", c.destaques.slice(0, 3).join(". ") + "."]]} />
-      <div className="mt-10 grid gap-4 md:grid-cols-3">
+      <dl className="grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-3">
+        {c.numeros.map((n) => (
+          <div key={n.valor} className="bg-surface px-5 py-5">
+            <dd className="font-display text-3xl font-semibold text-accent">{n.valor}</dd>
+            <dt className="mt-1 text-sm text-muted">{n.label}</dt>
+          </div>
+        ))}
+      </dl>
+
+      <div className="mt-12 grid items-start gap-10 md:grid-cols-2">
+        <div className="border-l-2 border-accent pl-4">
+          <h3 className="font-display text-lg font-semibold">O problema</h3>
+          <p className="mt-2 text-muted leading-relaxed">{c.problema}</p>
+        </div>
+        <div className="border-l-2 border-accent pl-4">
+          <h3 className="font-display text-lg font-semibold">A solução</h3>
+          <p className="mt-2 text-muted leading-relaxed">{c.solucao}</p>
+          <ul className="mt-3 space-y-2 leading-relaxed">
+            {c.solucaoItens.map(([t, d]) => (
+              <li key={t} className="text-muted"><span className="font-medium text-ink">{t}:</span> {d}</li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      <div className="mt-12 grid gap-4 md:grid-cols-3">
         {c.imagens.map((i) => (
           <figure key={i.src} className="overflow-hidden rounded-2xl border border-line bg-surface">
             <Image src={i.src} alt={i.alt} width={1440} height={900} sizes="(max-width: 768px) 100vw, 380px" className="h-auto w-full" />
           </figure>
         ))}
       </div>
-      <ul className="mt-8 grid gap-2 text-muted sm:grid-cols-2">
-        {c.destaques.map((d) => <li key={d} className="flex gap-2"><span className="text-accent" aria-hidden>✓</span>{d}</li>)}
-      </ul>
+
+      <div className="mt-12 grid gap-10 md:grid-cols-3">
+        <Lista titulo="Funcionalidades complementares" itens={c.complementares} />
+        <Lista titulo="Arquitetura e segurança" itens={c.seguranca} />
+        <Lista titulo="Resultados alcançados" itens={c.resultados} />
+      </div>
+
+      <blockquote className="mt-12 rounded-2xl border border-line bg-surface p-6">
+        <p className="text-sm text-accent">O diferencial do projeto</p>
+        <p className="mt-2 font-display text-xl leading-snug sm:text-2xl">{c.diferencial}</p>
+      </blockquote>
+
       <div className="mt-6"><Tags items={c.stack} /></div>
     </Section>
   );
