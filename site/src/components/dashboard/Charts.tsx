@@ -37,8 +37,8 @@ export function Card({ title, subtitle, children, className = "" }: { title: str
   );
 }
 
-export function Empty() {
-  return <div className="grid h-full place-items-center text-sm text-muted">Sem dados para este filtro.</div>;
+export function Empty({ lang = "pt" }: { lang?: "pt" | "en" }) {
+  return <div className="grid h-full place-items-center text-sm text-muted">{lang === "en" ? "No data for this filter." : "Sem dados para este filtro."}</div>;
 }
 
 /** Barras executado (verde = bateu meta, vermelho = abaixo), linha da meta e linha do potencial. */
@@ -75,7 +75,7 @@ export function RankingChart({ data, k, meta, menorMelhor, lang = "pt" }: { data
     .map((d) => ({ nome: d.nome.replace("Distribuidora ", ""), v: d[k] }))
     .filter((d): d is { nome: string; v: number } => d.v !== null)
     .sort((a, b) => (menorMelhor ? a.v - b.v : b.v - a.v));
-  if (rows.length === 0) return <div className="h-48"><Empty /></div>;
+  if (rows.length === 0) return <div className="h-48"><Empty lang={lang} /></div>;
   const ok = (v: number) => (meta === undefined ? true : menorMelhor ? v <= meta : v >= meta);
   return (
     <div style={{ height: Math.max(140, rows.length * 30 + 20) }}>
