@@ -6,7 +6,7 @@ export const perfil = {
   subtitulo:
     "15+ anos transformando problemas de negócio em resultados medidos — agora em dados e software.",
   resumo: [
-    "Administrador, especialista em Ciência de Dados, com mais de 15 anos de experiência em uma empresa multisserviços do setor de energia, atuando na liderança de projetos, gestão de equipes e transformação de processos por meio de dados e tecnologia.",
+    "Administrador, especialista em Ciência de Dados, com mais de 15 anos de experiência na primeira multi-utilities nacional, atuando na liderança de projetos, gestão de equipes e transformação de processos por meio de dados e tecnologia.",
     "Ao longo da minha trajetória, desenvolvi uma visão estratégica que conecta negócio, tecnologia e dados, transformando desafios operacionais em soluções, indicadores e resultados mensuráveis. Tenho experiência com Power BI, SQL, Python, Snowflake e BigQuery, aplicados à construção de soluções analíticas, consultas e processamento de dados, automação de processos e geração de valor para o negócio.",
     "Nos últimos anos, ampliei minha atuação no universo da tecnologia, descobrindo uma nova paixão pelo desenvolvimento de soluções. Atualmente, curso Análise e Desenvolvimento de Sistemas e desenvolvo aplicações web próprias, aprofundando meus conhecimentos em programação, arquitetura de soluções e engenharia de dados.",
     "Acredito na tecnologia como um instrumento de transformação dos negócios e busco integrar minha experiência em gestão e Analytics à construção de soluções tecnológicas cada vez mais eficientes e escaláveis.",
